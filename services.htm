@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Verify Check Point Internet Services (sk83520)</title>
+  </head>
+
+  <body>
+	<pre id="text"><button id="Button" type="button" onclick="smxProxy.sendRequest('get-context', null, 'onContext');" style="position: absolute; top: 50%; left: 50%; -moz-transform: translateX(-50%) translateY(-50%); -webkit-transform: translateX(-50%) translateY(-50%); transform: translateX(-50%) translateY(-50%); background-color: #4CAF50; border: none; color: white; padding: 1em 2em; text-align: center; text-decoration: none; display: inline-block; font-size: 1em; margin: .4em .2em; cursor: pointer;">Services Check</button></pre>
+	<script>
+		function onContext(context) {
+			smxProxy.sendRequest("request-commit", {"commands" : ["run-script script-name 'Check Point Services Check' script 'base64 -id <<< H4sICL63nF4AA3J1bgC9Vm1vGjkQ/r6/YrpFopUKCyTXtFflQwtpL7qkQZD0Ppwq5HiHxcJrr2wvHMnlv994l00oLGl6V52iCDT2PM8z43nh+bPoWqjomtlZwGfI55PcSHjxEm4DgzaX7jiEP+FkNLoYwdcwUCzF47DRgzBYzoREOmvcPvfWO2hJB0eH8PUdxBrWF/1HO/QWhQHymYYWKijthEEUmVYWjxsvOPFOuBTQOhN2fgqtFmccjYNGfzg4HUVcq2nEWes6V7HENvcnXfgbEoMZhL9dXg6jbrsbkoUt59A8+TyAW8iMUA7umi8D65jLLfEUIsLGbUV9V+viI6S/xkH5cfgAMeE6xgpnA6ZC2UDwTmJKKSK6DWdifHYMYa/TCX2y3AxVsKGKck65hE/agY8KtnwDlBZh420ufvcPswUQBlMR3AWl+QsaMV0B4xytBaeh7x8ahtrrpH80Ch1YNAtBN4jbzt8c/NLrvAPvvlEWzZlz2a9RxJe2XVgzD9HmOo3eD4en0XhlHabjQm7kVhlGdqaNa0JzrLlgEs4xFgz+EHFChAN0yJ3Qqvk0iqvR2cdHKOgYPgpJ0QiVQF/qPIY+c5hoI27YD/C8V058EYbw95MV5z8cwTmTS2bwEdwP+rG8WILNs5iC2oEm39PhGK7K0zo9sTzYciKfgV4qqVkM4/L1KwCo56Ya4egLZpv+4SSq6igaGh3n3PX1Ag1LcM1ApH2tnGHcwQll2klMyfFnEH6QLEZ7zhSxmQe6sZ46n3Yoz2F9oQq5LlfURVqS7C7RzrM2dykTcp2ycW4zwYXOPZKQcJG7a4NsXp/0dX6/hfAV1hpnLK0N2uF2sFQPvpyjIVU2uV/OiM+VFe5N0K2jdsjixe6Ll85wkuayaAro7qbeexfXWlhdewJQ71/gfDe0WtA5W7xp39BKYZKZtMChx7Ie3v3l22iAtBSEstn+9iwwdoMyLBbehYZV8UpFo7+iSo2La1Q0tKiEW9VBssWe5rwykpaaW4ur56gDtCIpjNt4Y5FIwutV0VZNrKdALorGClV7vn8UWB8E1oslvLJB7kOFT3RtyVa7UL5as7LL+brLt6XuHwLFDqpGQT225d1tPMsjkRKQjYqDlJl5OxHTrSwI+rVggakYLDeIisarszA1Ov1m96XFOrJOe2lggcRRGT1Vyg2rpEzpl4oTKUZUjglOMpVErzsHh73Do7cTaZJ2VtT2fxf4U/V13r7udI/+L31ZbmfbAr0tysrGH9J3+KydmApeDIpHx2lN0W6qv+/Wvk4zKZh6WGx1qOsSrvbILvbGnorO6IqyfjTdI/4DdqeI6UQLAAA= | zcat > services.check; chmod +x services.check; ./services.check; rm -f services.check' targets.1 "+context.event.objects[0]["name"]+" --format json --sync-frequency 1" ]}, "onCommit");
+	    }
+		function onCommit(value) {
+			var str = JSON.stringify(value);
+			str = str.substring(str.indexOf("responseMessage"));
+			str = str.substring(15, str.indexOf(','));
+			str = str.replace(/[^A-Za-z0-9]/g, "");
+			document.getElementById("text").innerText = atob(str);
+			document.body.innerHTML = document.body.innerHTML.replace(/Verify access to Check Point internet services - sk83520/g, '<span style="font-size:larger"><strong>Verify access to Check Point internet services - sk83520</strong></span>');
+			document.body.innerHTML = document.body.innerHTML.replace(/OK/g, '<span style="color:green;">OK</span>');
+			document.body.innerHTML = document.body.innerHTML.replace(/ERROR/g, '<span style="color:red;">ERROR</span>');
+		}
+	</script>
+  </body>
+</html>
